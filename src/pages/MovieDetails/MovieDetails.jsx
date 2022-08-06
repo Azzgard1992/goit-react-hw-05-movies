@@ -19,6 +19,7 @@ export const MovieDetails = () => {
         const movieDetails = await getMovieInfoById(moviesId);
         setMovie(movieDetails);
       } catch (error) {
+        // console.log(error);
         setError(error);
       } finally {
         setIsLoader(false);
@@ -32,53 +33,55 @@ export const MovieDetails = () => {
   const { title, poster_path, genres, overview, release_date, runtime } = movie;
 
   return (
-    <main>
+    <>
       {error && <p>Something went wrong, please reload the page...</p>}
-      {isLoader && <Loader />}
-      <Link to={backLinkHref}>
-        <Button>Go back</Button>
-      </Link>
+      <main>
+        {isLoader && <Loader />}
+        <Link to={backLinkHref}>
+          <Button>Go back</Button>
+        </Link>
 
-      <Wrapper>
-        <div>
-          <img
-            src={
-              poster_path
-                ? `https://www.themoviedb.org/t/p/w300_and_h450_face/${poster_path}`
-                : 'https://via.placeholder.com/220x330'
-            }
-            alt={title}
-          />
-        </div>
-        <MovieInfo>
-          <h2>
-            {title}({release_date.slice(0, 4)})
-          </h2>
-          <p>
-            <b>Runtime:</b> {runtime}m
-          </p>
-          <b>Ganres:</b>
-          <ul>
-            {genres.map(({ id, name }) => (
-              <li key={id}>{name}</li>
-            ))}
-          </ul>
-          <b>Overview:</b>
-          <p>{overview}</p>
-        </MovieInfo>
-      </Wrapper>
-      <AddInfo>
-        <h2>Additional Information:</h2>
-        <AddLink to="cast" state={location.state}>
-          Cast
-        </AddLink>
+        <Wrapper>
+          <div>
+            <img
+              src={
+                poster_path
+                  ? `https://www.themoviedb.org/t/p/w300_and_h450_face/${poster_path}`
+                  : 'https://via.placeholder.com/220x330'
+              }
+              alt={title}
+            />
+          </div>
+          <MovieInfo>
+            <h2>
+              {title}({release_date.slice(0, 4)})
+            </h2>
+            <p>
+              <b>Runtime:</b> {runtime}m
+            </p>
+            <b>Ganres:</b>
+            <ul>
+              {genres.map(({ id, name }) => (
+                <li key={id}>{name}</li>
+              ))}
+            </ul>
+            <b>Overview:</b>
+            <p>{overview}</p>
+          </MovieInfo>
+        </Wrapper>
+        <AddInfo>
+          <h2>Additional Information:</h2>
+          <AddLink to="cast" state={location.state}>
+            Cast
+          </AddLink>
 
-        <AddLink to="reviews" state={location.state}>
-          Reviews
-        </AddLink>
-      </AddInfo>
+          <AddLink to="reviews" state={location.state}>
+            Reviews
+          </AddLink>
+        </AddInfo>
 
-      <Outlet />
-    </main>
+        <Outlet />
+      </main>
+    </>
   );
 };

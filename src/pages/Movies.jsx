@@ -28,6 +28,8 @@ export const Movies = () => {
     getMovies();
   }, [filter]);
 
+  console.log(error);
+
   const changeFilter = moviesName => {
     setSearchParams(moviesName !== '' ? { query: moviesName } : {});
   };

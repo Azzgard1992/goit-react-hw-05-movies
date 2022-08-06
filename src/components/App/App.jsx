@@ -1,11 +1,10 @@
-import { Cast } from 'components/Cast/Cast';
-import { Reviews } from 'components/Reviews/Reviews';
 import { SharedLayout } from 'components/SharedLayout/SharedLayout';
 import { Routes, Route } from 'react-router-dom';
 import { GlobalStyle } from 'components/GlobalStyle/GlobalStyle';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { lazy } from 'react';
+import { NotFound } from 'components/NotFound/NotFound';
 
 const Home = lazy(() =>
   import('pages/Home').then(module => ({ ...module, default: module.Home }))
@@ -17,6 +16,18 @@ const MovieDetails = lazy(() =>
   import('pages/MovieDetails/MovieDetails').then(module => ({
     ...module,
     default: module.MovieDetails,
+  }))
+);
+const Cast = lazy(() =>
+  import('components/Cast/Cast').then(module => ({
+    ...module,
+    default: module.Cast,
+  }))
+);
+const Reviews = lazy(() =>
+  import('components/Reviews/Reviews').then(module => ({
+    ...module,
+    default: module.Reviews,
   }))
 );
 
@@ -33,6 +44,7 @@ export const App = () => {
             <Route path="reviews" element={<Reviews />} />
           </Route>
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <ToastContainer />
     </div>
