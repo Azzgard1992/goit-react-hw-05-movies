@@ -34,7 +34,7 @@ export const MovieDetails = () => {
       }
     }
     getMovie();
-  }, [moviesId]);
+  }, [moviesId, navigate]);
 
   if (!movie) return null;
 
