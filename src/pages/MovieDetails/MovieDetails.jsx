@@ -1,7 +1,13 @@
 import { Button } from 'components/Button/Button';
 import { Loader } from 'components/Loader/Loader';
 import { useState, useEffect } from 'react';
-import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
+import {
+  Link,
+  Outlet,
+  useLocation,
+  useNavigate,
+  useParams,
+} from 'react-router-dom';
 import { getMovieInfoById } from 'service/api';
 import { AddInfo, MovieInfo, Wrapper, AddLink } from './MovieDetails.styled';
 
@@ -12,6 +18,8 @@ export const MovieDetails = () => {
   const [error, setError] = useState(null);
   const location = useLocation();
   const backLinkHref = location.state?.from ?? '/';
+  const navigate = useNavigate();
+
   useEffect(() => {
     async function getMovie() {
       try {
@@ -19,7 +27,7 @@ export const MovieDetails = () => {
         const movieDetails = await getMovieInfoById(moviesId);
         setMovie(movieDetails);
       } catch (error) {
-        // console.log(error);
+        navigate('/', { replace: true });
         setError(error);
       } finally {
         setIsLoader(false);
